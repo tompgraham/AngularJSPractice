@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    
+    
+    <head>
+        <title>TomGrahamMP1</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script type="text/javascript" src="src/ButtonHandlers.js"></script>
+    </head>
+    <body>
+        <div ng-app="MyApp" ng-controller="myCtrl" ng-model="selectedParty">
+            <h1>My Useless MP</h1>
+            
+            <hr>
+            
+            <h2>Question 1</h2>
+            
+            <p>Who has your vote for US President?</p>
+            
+            <hr>
+            
+            <h2>Question 2</h2>
+           
+            <p>What is your party affiliation?</p>
+            
+            <select ng-model="selectedParty">
+                <option ng-repeat="x in parties" value ="{{x.model}}">
+                    {{x.model}}</option>
+            </select>
+            
+            <li ng-repeat="x in parties">
+                <label>{{x.model}}
+                    <input type="radio" ng-model="selectedParty" name="name" value ="{{x.model}}" required />
+                </label>
+            </li>
+            
+            <hr>
+            
+            <h2>State of your answers: {{selectedParty}}</h2>
+                
+        </div>
+
+    </body>
+</html>
