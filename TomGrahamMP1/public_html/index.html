@@ -15,7 +15,7 @@ and open the template in the editor.
         <script type="text/javascript" src="src/ButtonHandlers.js"></script>
     </head>
     <body>
-        <div ng-app="MyApp" ng-controller="myCtrl" ng-model="selectedParty">
+        <div ng-app="MyApp" ng-controller="myCtrl">
             <h1>My Useless MP</h1>
             
             <hr>
@@ -24,26 +24,34 @@ and open the template in the editor.
             
             <p>Who has your vote for US President?</p>
             
+            <select ng-model="selectedCand" ng-options="x.cand for x in candidates"></select>
+           
+            <input type="radio" ng-model="selectedCand"  ng-value="candidates[0]"> Hillary Clinton
+            <input type="radio" ng-model="selectedCand"  ng-value="candidates[1]" > Donald Trump
+            <input type="radio" ng-model="selectedCand"  ng-value="candidates[2]"> Gary Johnson
+            <input type="radio" ng-model="selectedCand"  ng-value="candidates[3]"> Jill Stein
+            <input type="radio" ng-model="selectedCand"  ng-value="candidates[4]"> Darrell Castle
+            
+            <div>
+                <input type="text" ng-model="selectedCand.index" ng-change="textInput(selectedCand.index)">
+            </div>
+            
             <hr>
             
             <h2>Question 2</h2>
            
             <p>What is your party affiliation?</p>
             
-            <select ng-model="selectedParty">
-                <option ng-repeat="x in parties" value ="{{x.model}}">
-                    {{x.model}}</option>
-            </select>
-            
-            <li ng-repeat="x in parties">
-                <label>{{x.model}}
-                    <input type="radio" ng-model="selectedParty" name="name" value ="{{x.model}}" required />
-                </label>
-            </li>
+            <select ng-model="selectedParty" ng-options="x.party for x in parties"></select>
+           
+            <input type="radio" ng-model="selectedParty"  ng-value="parties[0]"> Democratic
+            <input type="radio" ng-model="selectedParty"  ng-value="parties[1]" > Republican
+            <input type="radio" ng-model="selectedParty"  ng-value="parties[2]"> Libertarian
+            <input type="radio" ng-model="selectedParty"  ng-value="parties[3]"> Green
             
             <hr>
             
-            <h2>State of your answers: {{selectedParty}}</h2>
+            <h2>State of your answers: {{selectedParty.party}}{{selectedCand.cand}}</h2>
                 
         </div>
 

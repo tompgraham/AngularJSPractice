@@ -12,8 +12,23 @@ myModule.controller('myCtrl', function($scope)
 {
     $scope.parties = 
     [
-        {model : "Democratic"},
-        {model : "Republican"},
-        {model : "Libertarian"}
+        {party : "Democratic"},
+        {party : "Republican"},
+        {party : "Libertarian"},
+        {party : "Green"}
     ];
+    
+    $scope.candidates =
+    [
+        {cand : "Hillary Clinton", index : 0},
+        {cand : "Donald Trump", index : 1},
+        {cand : "Gary Johnson", index : 2},
+        {cand : "Jill Stein", index : 3},
+        {cand : "Darrell Castle... who?", index : 4}
+    ]
+    
+    $scope.textInput = function (input)
+    {
+        $scope.selectedCand = $scope.candidates[input];
+    };
 });
