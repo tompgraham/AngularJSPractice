@@ -21,7 +21,8 @@ and open the template in the editor.
             <hr>
             
             <h2>Question 1</h2>
-            
+            Hide Question: <input type ="checkbox" ng-model="checked1" label ="Toggle ngHide"><br/>
+            <div ng-hide="checked1">
             <p>Who has your vote for US President?</p>
             
             <select ng-model="selectedCand" ng-options="x.cand for x in candidates"></select>
@@ -35,11 +36,12 @@ and open the template in the editor.
             <div>
                 <input type="text" ng-model="selectedCand.index" ng-change="textInput(selectedCand.index)">
             </div>
-            
+            </div>
             <hr>
             
             <h2>Question 2</h2>
-           
+            Hide Question: <input type ="checkbox" ng-model="checked2" label ="Toggle ngHide"><br/>
+            <div ng-hide="checked2">
             <p>What is your party affiliation?</p>
             
             <select ng-model="selectedParty" ng-options="x.party for x in parties"></select>
@@ -51,8 +53,8 @@ and open the template in the editor.
             
             <hr>
             
-            <h2>State of your answers: {{selectedParty.party}}{{selectedCand.cand}}</h2>
-                
+            </div>   
+            <h2>State of your answers: {{selectedParty.party}} {{selectedCand.cand}}</h2>
         </div>
 
     </body>
