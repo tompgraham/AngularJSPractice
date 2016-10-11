@@ -6,11 +6,62 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>TomGrahamMp2</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel ="icon" type ="image/x-icon" href="./assets/favicon.png">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script type="text/javascript" src="src/TimerDriver.js"></script>
+        <script type="text/javascript" src="src/CSS450Timer.js"></script>
+        <script type="text/javascript" src="src/ButtonHandlers.js"></script>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div ng-app="MyApp" ng-controller="myCtrl" ng-app ="MeasuringApp" ng-controller="TimerCtrl">
+            <h1>My MP2 Measuring App</h1>
+            
+            Begin Session: <input type ="checkbox" ng-model="checked" ng-model="timerEnabled" label ="Toggle ngHide" ng-click = "enableTimer()"><br/>
+            <div ng-show="checked">
+                
+                <div
+                    ng-mousemove="serviceMove($event)"
+                    ng-mousemove="serviceMove($event)"
+                    style="width: 800px; height: 200px; outline: 1px solid; background-color: #EEEEFF">
+                    <h2> Measuring Area </h2>
+                </div>
+                
+            </div>
+            
+            <hr>
+            
+            <p>Seconds has passed: <input type ="text" ng-model="timerDisplay" size="50">
+            <css-timer interval = "100" callback="updateTimer" timeron = "timerEnabled"></css-timer>
+            </p>
+            <p>since enabled measure session</p>
+            
+            <div ng-show="checked">
+                <p> Unit:
+                    Pixel <input type="radio" ng-model="selectedUnit" ng-value="units[0]">
+                    Millimeters <input type="radio" ng-model="selectedUnit" ng-value="units[1]">
+                    Centimeters <input type="radio" ng-model="selectedUnit" ng-value="units[2]">
+                    Meters <input type="radio" ng-model="selectedUnit" ng-value="units[3]">
+                </p>
+                
+                <p>
+                    Scale: 
+                </p>
+                
+                <div 
+                    style="width: 400px; height: 100px; outline: 1px solid; background-color: #33F9FF">
+                    <h2> Measurement Statistics </h2>
+                </div>
+                
+                <div 
+                    style="width: 400px; height: 100px; outline: 1px solid; background-color: #33FF66">
+                    <h2> Mouse Movement Info </h2>
+                </div>
+                
+            </div>
+            
+        </div>
     </body>
 </html>
