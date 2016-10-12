@@ -8,11 +8,16 @@
 
 var TimerDriver = angular.module("MeasuringApp", ["CSS450Timer"]);
 
+
+
 TimerDriver.controller("myCtrl", function ($scope)
 {
     $scope.timerDisplay = "";
     $scope.timerValue = 0;
     $scope.timerEnabled = false;
+    
+
+    
     
     $scope.units =
     [
@@ -22,20 +27,39 @@ TimerDriver.controller("myCtrl", function ($scope)
         {unit : "Meters"}
     ];
     
-    $scope.timerUpdate = function () 
+    $scope.serviceDown = function (event)
+    {
+        if (event.button === 0)
+        {
+            console.log("leftmousepressed");
+        }
+        
+        if (event.button === 2)
+        {
+            console.log("rightmousepressed");
+        }
+    }
+    
+    $scope.serviceMove = function (event)
     {
         
-        $scope.timerValue += 1;
-        $scope.timerDisplay = $scope.timerValue;
+    }
+    
+    $scope.timerUpdate = function () 
+    {
+        if ($scope.timerEnabled)
+        {
+            $scope.timerValue += 1;
+            $scope.timerDisplay = $scope.timerValue;
+        }
+        
     };
  
  
     $scope.toggleTimer = function ()
     {
-        console.log("we got here!");
-        if (true)
+        if (!$scope.timerEnabled)
         {
-            
             $scope.timerEnabled = true;
             $scope.$broadcast("timer-started");
         }
@@ -43,6 +67,7 @@ TimerDriver.controller("myCtrl", function ($scope)
         {
             $scope.timerEnabled = false;
             $scope.timerValue = 0;
+            $scope.timerDisplay = $scope.timerValue;
             $scope.$broadcast("timer-stopped"); 
         }
 

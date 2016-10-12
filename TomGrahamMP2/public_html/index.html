@@ -14,16 +14,17 @@ and open the template in the editor.
         <script type="text/javascript" src="src/TimerDriver.js"></script>
         <script type="text/javascript" src="src/lib/CSS450Timer.js"></script>
     </head>
-    <body>
+    <body oncontextmenu = "return false;">
+        
         <div ng-controller="myCtrl" ng-app ="MeasuringApp">
             <h1>My MP2 Measuring App</h1>
             
-            Begin Session: <input type ="checkbox" ng-model="checked" ng-model="timerEnabled" label ="Toggle ngHide" ng-click = "toggleTimer()"><br/>
+            Begin Session: <input type ="checkbox" ng-model="checked" label ="Toggle ngHide" ng-click = "toggleTimer()"><br/>
             <div ng-show="checked">
                 
                 <div
                     ng-mousemove="serviceMove($event)"
-                    ng-mousemove="serviceMove($event)"
+                    ng-mousedown="serviceDown($event)"
                     style="width: 800px; height: 200px; outline: 1px solid; background-color: #EEEEFF">
                     <h2> Measuring Area </h2>
                 </div>
@@ -31,8 +32,9 @@ and open the template in the editor.
             </div>
             
             <hr>
+            <css-timer interval = "100" callback="timerUpdate" timeron = "true"></css-timer>
             <p>Seconds has passed: <input type ="text" ng-model="timerDisplay" size="50">
-            <css-timer interval = "100" callback="timerUpdate" timeron = "timerEnabled"></css-timer>
+            
             </p>
             <p>since enabled measure session</p>
             
