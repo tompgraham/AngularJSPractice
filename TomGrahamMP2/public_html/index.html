@@ -12,14 +12,13 @@ and open the template in the editor.
         <link rel ="icon" type ="image/x-icon" href="./assets/favicon.png">
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
         <script type="text/javascript" src="src/TimerDriver.js"></script>
-        <script type="text/javascript" src="src/CSS450Timer.js"></script>
-        <script type="text/javascript" src="src/ButtonHandlers.js"></script>
+        <script type="text/javascript" src="src/lib/CSS450Timer.js"></script>
     </head>
     <body>
-        <div ng-app="MyApp" ng-controller="myCtrl" ng-app ="MeasuringApp" ng-controller="TimerCtrl">
+        <div ng-controller="myCtrl" ng-app ="MeasuringApp">
             <h1>My MP2 Measuring App</h1>
             
-            Begin Session: <input type ="checkbox" ng-model="checked" ng-model="timerEnabled" label ="Toggle ngHide" ng-click = "enableTimer()"><br/>
+            Begin Session: <input type ="checkbox" ng-model="checked" ng-model="timerEnabled" label ="Toggle ngHide" ng-click = "toggleTimer()"><br/>
             <div ng-show="checked">
                 
                 <div
@@ -32,9 +31,8 @@ and open the template in the editor.
             </div>
             
             <hr>
-            
             <p>Seconds has passed: <input type ="text" ng-model="timerDisplay" size="50">
-            <css-timer interval = "100" callback="updateTimer" timeron = "timerEnabled"></css-timer>
+            <css-timer interval = "100" callback="timerUpdate" timeron = "timerEnabled"></css-timer>
             </p>
             <p>since enabled measure session</p>
             

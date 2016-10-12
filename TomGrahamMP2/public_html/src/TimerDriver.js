@@ -8,11 +8,19 @@
 
 var TimerDriver = angular.module("MeasuringApp", ["CSS450Timer"]);
 
-TimerDriver.controller("TimerCtrl", function ($scope)
+TimerDriver.controller("myCtrl", function ($scope)
 {
     $scope.timerDisplay = "";
     $scope.timerValue = 0;
     $scope.timerEnabled = false;
+    
+    $scope.units =
+    [
+        {unit : "Pixel"},
+        {unit : "Millimeters"},
+        {unit : "Centimeters"},
+        {unit : "Meters"}
+    ];
     
     $scope.timerUpdate = function () 
     {
@@ -24,9 +32,10 @@ TimerDriver.controller("TimerCtrl", function ($scope)
  
     $scope.toggleTimer = function ()
     {
-        
-        if ($scope.timerEnabled === false)
+        console.log("we got here!");
+        if (true)
         {
+            
             $scope.timerEnabled = true;
             $scope.$broadcast("timer-started");
         }
