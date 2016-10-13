@@ -1,7 +1,6 @@
 /* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Created by Tom Graham 10/9/16 for CSS 450 UW Bothell
+ * Driver for MP2 program
  */
 
 "use strict";
@@ -12,6 +11,8 @@ var TimerDriver = angular.module("MeasuringApp", ["CSS450Timer", "CSS450Slider"]
 
 TimerDriver.controller("myCtrl", function ($scope)
 {
+    
+    //Units and their respective scale
     $scope.units =
     [
         {unit : "Pixel", scale: 1},
@@ -20,6 +21,7 @@ TimerDriver.controller("myCtrl", function ($scope)
         {unit : "Meters", scale: 50}
     ];
     
+    //Model variables
     $scope.timerDisplay = "";
     $scope.timerValue = 0;
     $scope.timerEnabled = false;
@@ -32,10 +34,13 @@ TimerDriver.controller("myCtrl", function ($scope)
     var clickList = [];
     
     
-
     
+    //serviceDown
+    //Function to service mouse clicks
     $scope.serviceDown = function (event)
     {
+        
+        //Check if left button is clicked
         if (event.button === 0)
         {
               var click = new clickInfo(event.pageX, event.pageY);
@@ -47,6 +52,7 @@ TimerDriver.controller("myCtrl", function ($scope)
               $scope.currentState = "Measuring in Progress: Number of LMB Click: " + clickList.length;
         }
         
+        //Check if right button is clicked
         if (event.button === 2)
         {
             $scope.distance = 0;
@@ -63,12 +69,16 @@ TimerDriver.controller("myCtrl", function ($scope)
         }
     };
     
+    //serviceMove
+    //Fuction to keep track of mouse movements
     $scope.serviceMove = function (event)
     {
         $scope.xCoordCurrent = event.pageX;
         $scope.yCoordCurrent = event.pageY;
     };
     
+    //timerUpdate
+    //Function called as a result of timer callback
     $scope.timerUpdate = function () 
     {
         if ($scope.timerEnabled)
@@ -79,7 +89,9 @@ TimerDriver.controller("myCtrl", function ($scope)
         
     };
  
- 
+    //toggleTimer
+    //Function to toggle timer between on/off states and reflect this
+    //in the gui
     $scope.toggleTimer = function ()
     {
         if (!$scope.timerEnabled)
@@ -107,6 +119,8 @@ TimerDriver.controller("myCtrl", function ($scope)
 
     };
     
+    //serviceSlider
+    //Function called in the callback of the slider to change units and scale
     $scope.serviceSlider = function()
     {
         if ($scope.SliderValue >= 0 && $scope.SliderValue < 5)
@@ -132,6 +146,8 @@ TimerDriver.controller("myCtrl", function ($scope)
         $scope.scaledDistance = $scope.SliderValue * $scope.distance;
     };
 
+    //serviceRadio
+    //Function called by radio button to change the slider model
     $scope.serviceRadio = function()
     {
         $scope.SliderValue = $scope.selectedUnit.scale;
