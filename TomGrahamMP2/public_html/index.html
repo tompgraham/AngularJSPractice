@@ -13,6 +13,8 @@ and open the template in the editor.
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
         <script type="text/javascript" src="src/TimerDriver.js"></script>
         <script type="text/javascript" src="src/lib/CSS450Timer.js"></script>
+        <script type="text/javascript" src="src/lib/CSS450Slider.js"></script>
+        <script type="text/javascript" src="src/clickInfo.js"></script>
     </head>
     <body oncontextmenu = "return false;">
         
@@ -20,6 +22,9 @@ and open the template in the editor.
             <h1>My MP2 Measuring App</h1>
             
             Begin Session: <input type ="checkbox" ng-model="checked" label ="Toggle ngHide" ng-click = "toggleTimer()"><br/>
+            
+            State: <input type ="text" ng-model="currentState" size ="50">
+            
             <div ng-show="checked">
                 
                 <div
@@ -40,26 +45,43 @@ and open the template in the editor.
             
             <div ng-show="checked">
                 <p> Unit:
-                    Pixel <input type="radio" ng-model="selectedUnit" ng-value="units[0]">
-                    Millimeters <input type="radio" ng-model="selectedUnit" ng-value="units[1]">
-                    Centimeters <input type="radio" ng-model="selectedUnit" ng-value="units[2]">
-                    Meters <input type="radio" ng-model="selectedUnit" ng-value="units[3]">
+                    Pixel <input type="radio" ng-model="selectedUnit" ng-value="units[0]" ng-change="serviceRadio()">
+                    Millimeters <input type="radio" ng-model="selectedUnit" ng-value="units[1]" ng-change="serviceRadio()">
+                    Centimeters <input type="radio" ng-model="selectedUnit" ng-value="units[2]" ng-change="serviceRadio()">
+                    Meters <input type="radio" ng-model="selectedUnit" ng-value="units[3]" ng-change="serviceRadio()">
                 </p>
+                
+                
                 
                 <p>
                     Scale: 
+                    <css-slider model="SliderValue" 
+                        callback="serviceSlider" 
+                        label="Input"> </css-slider>
                 </p>
-                
+                <div>
                 <div 
-                    style="width: 400px; height: 100px; outline: 1px solid; background-color: #33F9FF">
-                    <h2> Measurement Statistics </h2>
+                    style="width: 400px; float: left; height: 100px; outline: 1px solid; background-color: #33F9FF">
+                    Measurement Statistics<br>
+                    
+                    Total Displacement in pixels:<input type ="text" size="10" ng-model = "distance"><br>
+                    Total Displacement in 
+                        <input type ="text" ng-model ="selectedUnit.unit" size ="6">
+                        <input type ="text" size ="10" ng-model = "scaledDistance"><br>
+                    (pixel displacement *Scale)
                 </div>
                 
                 <div 
-                    style="width: 400px; height: 100px; outline: 1px solid; background-color: #33FF66">
-                    <h2> Mouse Movement Info </h2>
+                    style="width: 400px; float: left; height: 100px; outline: 1px solid; background-color: #33FF66">
+                    Mouse Movement Info<br>
+                    Current Mouse Pos:
+                    <input type="text" ng-model ="xCoordCurrent" size ="6">
+                    <input type="text" ng-model ="yCoordCurrent" size ="6"><br>
+                    Previous LMB Click:
+                    <input type="text" ng-model ="xCoordLMB" size ="6">
+                    <input type="text" ng-model ="yCoordLMB" size ="6"><br>
                 </div>
-                
+                </div>
             </div>
             
         </div>
