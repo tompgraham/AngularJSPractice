@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>My MP 3</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script type="text/javascript" src="src/lib/gl-matrix.js"></script>
+        <!-- Engine code: Graphics Support -->
+        <!-- Core of Engine -->
+        <script type="text/javascript" src="src/Engine/Core/Engine_Core.js"></script>
+        <script type="text/javascript" src="src/Engine/Core/Engine_VertexBuffer.js"></script>
+        <script type="text/javascript" src="src/Engine/SimpleShader.js"></script>
+        <script type="text/javascript" src="src/Engine/Renderable.js"></script>
+        <script type="text/javascript" src="src/Engine/Transform.js"></script>
+        <script type="text/javascript" src="src/Engine/Camera.js"></script>
+
+        <!-- GUI Lib -->
+        <script type="text/javascript" src="src/GUI/CSS450Timer.js"></script>
+        <script type="text/javascript" src="src/GUI/CSS450Slider.js"></script>
+        <script type="text/javascript" src="src/GUI/CSS450Xform.js"></script>
+        <script type="text/javascript" src="src/GUI/CanvasMouseSupport.js"></script>
+    </head>
+    <body>
+        
+        <canvas
+            ng-mousedown ="serviceMouseClick($event)"
+            id ="GLCanvas" width="800" height ="600">
+        </canvas>
+        <div>TODO write content</div>
+    </body>
+</html>
