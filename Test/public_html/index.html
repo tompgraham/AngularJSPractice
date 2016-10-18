@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body
+         ng-app="appMyExample" 
+         ng-controller="MainCtrl">
+        <label ng‐repeat="w in radioDetails">
+            {{w.what}}: <input type="radio"  
+   ng‐model="$parent.mSelection" value={{w.what }}><br>
+      </label>
+      <input id="idEcho" type="text">
+         
+      <script>
+            myModule = angular.module("appEX", []);
+            myModule.controller("ctrl", function ($scope) {
+                $scope.mSelection = "a1";
+                $scope.radioDetails = [
+                    {what: "a1", yes: "W1", no: "N1"},
+                    {what: "a2", yes: "W2", no: "N2"},
+                    {what: "a3", yes: "W3", no: "N3"},
+                    {what: "a4", yes: "W4", no: "N4"}
+                ];
+            });
+      </script>
+        <div>TODO write content</div>
+    </body>
+</html>
