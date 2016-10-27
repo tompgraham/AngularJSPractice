@@ -14,37 +14,80 @@ function ClassExample(htmlCanvasID) {
 
     // variables for the squares
     this.mCurrentObject = null;        // these are the Renderable objects
-    
+    this.mAllObjects = [];             // Initialize the array
 
-    // Step A: Initialize the webGL Context
+    this.listEmpty = false;
+    this.eraser = null;
+
     gEngine.Core.initializeWebGL(htmlCanvasID);
 
-    // Step B: Setup the camera
-    this.mCamera = new Camera();
-
-    // Step C: Create the shader
     this.mConstColorShader = new SimpleShader(
         "src/GLSLShaders/SimpleVS.glsl",      // Path to the VertexShader 
         "src/GLSLShaders/SimpleFS.glsl");    // Path to the simple FragmentShader
-    
-    // Step D: Create the Renderable objects:
-    this.mCurrentObject = new Renderable(this.mConstColorShader);
-    this.mCurrentObject.setColor([1, 0.25, 0.25, 1]);
 
-    // The corners 
-    // centre red square
-    this.mCurrentObject.getXform().setPosition(400, 300);
-    this.mCurrentObject.getXform().setSize(30, 30);
+    // create first object
+
+    this.defineCenter(.5, .5, 0, false);
 }
 
-ClassExample.prototype.draw = function () {
+ClassExample.prototype.draw = function (camera) {
+
+            
 
     // Step E: Clear the canvas
     gEngine.Core.clearCanvas([0.9, 0.9, 0.9, 1]);        // Clear the canvas
 
     // Step F: Starts the drawing by activating the camera
-    this.mCamera.setupViewProjection();
+    camera.setupViewProjection();
 
-    // centre red square
-    this.mCurrentObject.draw(this.mCamera);
+    var i;
+    for (i=0; i<this.mAllObjects.length; i++)
+        this.mAllObjects[i].draw(camera);
+    if (this.eraser!=null)
+    {
+        this.eraser.draw(camera);
+    }
+
+};
+
+ClassExample.prototype.getEmpty = function () {
+    return this.listEmpty;
+}
+
+ClassExample.prototype.update = function () {
+    
+    var i, xf;
+    for (i=0; i<this.mAllObjects.length; i++) {
+        xf = this.mAllObjects[i].getXform();
+        xf.setYPos(xf.getYPos() - 1);
+    }
+    
+    // now lets remove the ones fall beneath the screen
+    for (i=this.mAllObjects.length-1; i>=0; i--) {
+        xf = this.mAllObjects[i].getXform();
+        if (xf.getYPos() < 0.0) {
+            this.mAllObjects.splice(i, 1); // remove at i-position by 1
+            
+        }
+    }
+    
+    if (this.eraser!==null)
+    {
+        var j;
+        for (j = this.mAllObjects.length-1; j>i; j--) {
+            if (this.mAllObjects[j].mayHaveCollided(this.eraser)) {
+                this.mAllObjects.splice(j, 1);
+            }
+        }
+    }
+    
+    if (this.mAllObjects.length == 0)
+    {
+        this.listEmpty = true;
+        this.eraser = null;
+    }
+    else
+    {
+        this.listEmpty = false;
+    }
 };

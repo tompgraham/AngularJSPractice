@@ -21,15 +21,25 @@ function Renderable(shader) {
 //**-----------------------------------------
 // Public methods
 //**-----------------------------------------
-Renderable.prototype.draw = function (camera) {
-    var gl = gEngine.Core.getGL();
-    this.mShader.activateShader(this.mColor, camera.getVPMatrix());  // always activate the shader first!
-    this.mShader.loadObjectTransform(this.mXform.getXform());
-    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-};
+Renderable.prototype.draw = function (camera) {};
 
 Renderable.prototype.getXform = function () { return this.mXform; };
 Renderable.prototype.setColor = function (color) { this.mColor = color; };
 Renderable.prototype.getColor = function () { return this.mColor; };
+
+Renderable.prototype.mayHaveCollided = function(other) { // other is anotehr Renderable
+    var myXf = this.getXform();
+    var urXf = other.getXform();
+    // pretend xf.mScale contains the radius;
+    var myR = Math.min(myXf.getWidth(), myXf.getHeight());
+    var urR = Math.min(urXf.getWidth(), urXf.getHeight());
+    var rDist = myR*myR + urR*urR;
+
+    var dx = myXf.getXPos() - urXf.getXPos();
+    var dy = myXf.getYPos() - urXf.getYPos();
+    var distBetweenCenter = dx*dx + dy*dy;
+
+    return distBetweenCenter < rDist;
+};
 //--- end of Public Methods
 //</editor-fold>

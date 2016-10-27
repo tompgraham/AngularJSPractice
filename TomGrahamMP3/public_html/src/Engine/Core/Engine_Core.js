@@ -40,6 +40,7 @@ gEngine.Core = (function () {
 
         // now initialize the VertexBuffer
         gEngine.VertexBuffer.initialize();
+        gEngine.VertexBufferCirc.initialize();
     };
 
     // Clears the draw area and draws one square
@@ -48,12 +49,18 @@ gEngine.Core = (function () {
         mGL.clear(mGL.COLOR_BUFFER_BIT);      // clear to the color previously set
     };
 
+    var inheritPrototype = function (subClass, superClass) {
+        var prototype = Object.create(superClass.prototype);
+        prototype.constructor = subClass;
+        subClass.prototype = prototype;
+    };
     // -- end of public methods
 
     var mPublic = {
         getGL: getGL,
         initializeWebGL: initializeWebGL,
-        clearCanvas: clearCanvas
+        clearCanvas: clearCanvas,
+        inheritPrototype: inheritPrototype
     };
 
     return mPublic;
