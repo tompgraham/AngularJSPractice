@@ -10,7 +10,7 @@
 "use strict";
 
 // Creates the "backend" logical support for appMyExample
-var myModule = angular.module("appMyExample", ["CSS450Timer", "CSS450Slider", "CSS450Xform"]);
+var myModule = angular.module("appMyExample", ["CSS450Timer", "CSS450Slider", "CSS450Xform", "colorpicker.module"]);
 
 // registers the constructor for the controller
 // NOTE: the constructor is only called _AFTER_ the </body> tag is encountered
@@ -59,6 +59,10 @@ myModule.controller("MainCtrl", function ($scope) {
                 $scope.mCanvasMouse.getPixelYPos(event),
                 $scope.selectedShape);
             $scope.mForceRedraw = true;
+        }
+        if ($scope.eraseMode == true && event.button == 0)
+        {
+            $scope.mMyWorld.erase();
         }
     };
 

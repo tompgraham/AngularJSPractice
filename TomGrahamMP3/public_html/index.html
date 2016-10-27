@@ -30,7 +30,8 @@
         <script type="text/javascript" src="src/GUI/CSS450Slider.js"></script>
         <script type="text/javascript" src="src/GUI/CSS450Xform.js"></script>
         <script type="text/javascript" src="src/GUI/CanvasMouseSupport.js"></script>
-        
+        <script type="text/javascript" src="src/GUI/colorpickermodule.js"></script>
+        <link rel ="stylesheet" type="text/css" href="src/css/colorpicker.css">
         
         <!-- CSS -->
         
@@ -72,7 +73,7 @@
            
             Square <input type="radio" ng-model="selectedShape"  value=0>
             Circle <input type="radio" ng-model="selectedShape" value=1>
-        </div>    
-        <input type="color" id="html5colorpicker" onchange="clickColor(0, -1, -1, 5)" value="#ff0000" style="width:85%;">  
+        </div>      
+        <input colorpicker="rgb" type="text" ng-model="your_model" />
     </body>
 </html>

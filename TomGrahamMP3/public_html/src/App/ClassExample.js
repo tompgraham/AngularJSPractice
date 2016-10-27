@@ -18,6 +18,7 @@ function ClassExample(htmlCanvasID) {
 
     this.listEmpty = false;
     this.eraser = null;
+    this.clicked = false;
 
     gEngine.Core.initializeWebGL(htmlCanvasID);
 
@@ -54,6 +55,10 @@ ClassExample.prototype.getEmpty = function () {
     return this.listEmpty;
 }
 
+ClassExample.prototype.erase = function () {
+    this.clicked = true;
+}
+
 ClassExample.prototype.update = function () {
     
     var i, xf;
@@ -70,16 +75,19 @@ ClassExample.prototype.update = function () {
             
         }
     }
-    
-    if (this.eraser!==null)
+   
+    if (this.eraser!= null && this.clicked == true)
     {
+        var i;
         var j;
         for (j = this.mAllObjects.length-1; j>i; j--) {
             if (this.mAllObjects[j].mayHaveCollided(this.eraser)) {
                 this.mAllObjects.splice(j, 1);
+                this.clicked = false;
             }
         }
     }
+        
     
     if (this.mAllObjects.length == 0)
     {
