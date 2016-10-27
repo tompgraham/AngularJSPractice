@@ -27,6 +27,8 @@ myModule.controller("MainCtrl", function ($scope) {
     $scope.selectedShape = 0;
     $scope.eraseMode = false;
     $scope.drawMode = false;
+    $scope.mMyWorld.initialize();
+    
 
     $scope.mainTimerHandler = function () {
 
@@ -38,15 +40,41 @@ myModule.controller("MainCtrl", function ($scope) {
             $scope.drawMode = false;
             $scope.eraseMode = false;
         }
+        
             
 
     };
 
     $scope.enableEraseMode = function () {
-        $scope.eraseMode = true;
-        $scope.drawMode = false;
+        if ($scope.eraseMode == true && !$scope.mMyWorld.getEmpty())
+        {
+            $scope.drawMode = false;
+            $scope.mMyWorld.toggleEraser();
+            $scope.mMyWorld.resetErased();
+        }
+        else if ($scope.eraseMode == false && !$scope.mMyWorld.getEmpty())
+        {
+            $scope.drawMode = false;
+            $scope.mMyWorld.toggleEraser();
+        }else
+        {
+            $scope.eraseMode = false;
+        }
     }
 
+    $scope.changeColor = function (currentColor) 
+    {
+        var cur = currentColor.split("(");
+        cur = cur[1].split(")");
+        cur = cur[0].split(",")
+        cur.push(1);
+        cur[0] = cur[0]/255.0;
+        cur[1] = cur[0]/255.0;
+        cur[2] = cur[0]/255.0;
+          
+        $scope.mMyWorld.changeColor(cur);
+    }
+    
     $scope.serviceMouseDown = function (event) {
         if ($scope.drawMode == false && event.button == 0 && $scope.eraseMode == false)
         {
@@ -63,6 +91,11 @@ myModule.controller("MainCtrl", function ($scope) {
         if ($scope.eraseMode == true && event.button == 0)
         {
             $scope.mMyWorld.erase();
+        }
+        
+        if (event.button == 2)
+        {
+            $scope.drawMode = false;
         }
     };
 
@@ -88,6 +121,11 @@ myModule.controller("MainCtrl", function ($scope) {
                 $scope.selectedShape,
                 true);
             $scope.mForceRedraw = true;
+        }
+        
+        if ($scope.eraseMode == true && event.which == 1)
+        {
+            $scope.mMyWorld.erase();
         }
     };
 

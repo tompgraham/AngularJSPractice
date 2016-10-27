@@ -16,9 +16,11 @@ function ClassExample(htmlCanvasID) {
     this.mCurrentObject = null;        // these are the Renderable objects
     this.mAllObjects = [];             // Initialize the array
 
-    this.listEmpty = false;
+    this.listEmpty = true;
     this.eraser = null;
     this.clicked = false;
+    this.erased = 0;
+    this.eraseMode = false;
 
     gEngine.Core.initializeWebGL(htmlCanvasID);
 
@@ -51,6 +53,11 @@ ClassExample.prototype.draw = function (camera) {
 
 };
 
+ClassExample.prototype.initialize = function () {
+    this.mAllObjects = []; 
+    this.listEmpty = true;
+}
+
 ClassExample.prototype.getEmpty = function () {
     return this.listEmpty;
 }
@@ -59,20 +66,43 @@ ClassExample.prototype.erase = function () {
     this.clicked = true;
 }
 
-ClassExample.prototype.update = function () {
-    
-    var i, xf;
-    for (i=0; i<this.mAllObjects.length; i++) {
-        xf = this.mAllObjects[i].getXform();
-        xf.setYPos(xf.getYPos() - 1);
+ClassExample.prototype.resetErased = function () {
+    this.erased = 0;
+}
+
+ClassExample.prototype.changeColor = function (color) {
+    this.mCurrentObject.setColor(color);
+}
+
+ClassExample.prototype.toggleEraser = function (){
+    if (this.eraseMode)
+    {
+        this.eraseMode = false;
+        this.eraser = null;
     }
+    else if (!this.eraseMode)
+    {
+        this.eraseMode = true;
+    }
+}
+
+ClassExample.prototype.update = function () {
+    if (this.eraseMode)
+    {
+        var i, xf;
+        for (i=0; i<this.mAllObjects.length; i++) {
+            xf = this.mAllObjects[i].getXform();
+            xf.setYPos(xf.getYPos() - 1);
+        }
     
     // now lets remove the ones fall beneath the screen
-    for (i=this.mAllObjects.length-1; i>=0; i--) {
-        xf = this.mAllObjects[i].getXform();
-        if (xf.getYPos() < 0.0) {
-            this.mAllObjects.splice(i, 1); // remove at i-position by 1
-            
+
+        for (i=this.mAllObjects.length-1; i>=0; i--) {
+            xf = this.mAllObjects[i].getXform();
+            if (xf.getYPos() < 0.0) {
+                this.mAllObjects.splice(i, 1); // remove at i-position by 1
+
+            }
         }
     }
    
@@ -84,6 +114,7 @@ ClassExample.prototype.update = function () {
             if (this.mAllObjects[j].mayHaveCollided(this.eraser)) {
                 this.mAllObjects.splice(j, 1);
                 this.clicked = false;
+                this.erased++;
             }
         }
     }
@@ -92,6 +123,7 @@ ClassExample.prototype.update = function () {
     if (this.mAllObjects.length == 0)
     {
         this.listEmpty = true;
+        this.eraseMode = false;
         this.eraser = null;
     }
     else
