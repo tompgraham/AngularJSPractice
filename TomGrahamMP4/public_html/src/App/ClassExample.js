@@ -59,9 +59,14 @@ ClassExample.prototype.draw = function (camera, mainCamera) {
     for (i=0; i<this.mAllObjects.length; i++)
         this.mAllObjects[i].draw(camera);
     
+    
+    
     if (mainCamera)
     {
+        
         this.viewPortSquare.draw(camera);
+    }else
+    {
         this.wcSquare.draw(camera);
     }
     

@@ -67,8 +67,6 @@ myModule.controller("MainCtrl", function ($scope) {
     $scope.setSmallViewWCCenter();
     $scope.setSmallViewport();
 
-    $scope.mMyWorld.setSquareArea(false, -20,10,200,200);
-
     $scope.mMyWorld.setSquareArea(true, $scope.mSmallViewWCCenter[0],$scope.mSmallViewWCCenter[1],
             $scope.mSmallViewWCWidth, $scope.mSmallViewWCWidth);
 
@@ -79,8 +77,15 @@ myModule.controller("MainCtrl", function ($scope) {
         // $scope.mMyWorld.update();
         $scope.mMyWorld.setSquareArea(true, $scope.mSmallViewWCCenter[0],$scope.mSmallViewWCCenter[1],
             $scope.mSmallViewWCWidth, $scope.mSmallViewWCWidth);
+
+        $scope.mMyWorld.setSquareArea(false, $scope.mSmallViewWCCenter[0],$scope.mSmallViewWCCenter[1],
+                $scope.mSmallViewWCWidth, $scope.mSmallViewport[3] * $scope.mSmallViewWCWidth/ 200);
+//        $scope.mMyWorld.setSquareArea(false, 
+//                (($scope.mSmallViewport[2]+$scope.mSmallViewport[0]) * 200 / 800) - 125,
+//                (($scope.mSmallViewport[3]+$scope.mSmallViewport[1]) * 200 / 800) - 100,
+//                $scope.mSmallViewport[2] * 200 / 800,
+//                $scope.mSmallViewport[3] * 200 /800)
         
-       // $scope.mMyWorld.setSquareArea(false, 5,5,10,10);
         
         $scope.mMyWorld.draw($scope.mView, true);
 
@@ -124,13 +129,29 @@ myModule.controller("MainCtrl", function ($scope) {
     $scope.dragSquare = function (event) {
         var wcPos;
         var wcPos = $scope.computeWCPos(event);
-        
+        var viewCenterX = $scope.mSmallViewport[0] + $scope.mSmallViewport[2]/2
+        var viewCenterY = $scope.mSmallViewport[1] + $scope.mSmallViewport[3]/2
+        var pixelX = $scope.mCanvasMouse.getPixelXPos(event);
+        var pixelY = $scope.mCanvasMouse.getPixelYPos(event);
         // console.log("dragging");
         switch (event.which) {
         case 1: // left
-            $scope.mMyWorld.defineWidth(wcPos);
+            if ((wcPos[0] <= $scope.mSmallViewWCCenter[0] + 5 || wcPos[0] >= $scope.mSmallViewWCCenter[0]) && (wcPos[1] <= $scope.mSmallViewWCCenter[1] + 5 || wcPos[1] >= $scope.mSmallViewWCCenter[1]))
+            {
+                $scope.mSmallViewWCCenter[0] = wcPos[0];
+                $scope.mSmallViewWCCenter[1] = wcPos[1];
+                $scope.setSmallViewWCCenter();
+            }else if ((pixelX <= viewCenterX + 10 || pixelX >= viewCenterX - 10) && (pixelY <= viewCenterY + 10 || pixelY >= viewCenterY - 10))
+            {
+                $scope.mSmallViewport[0] = pixelX - $scope.mSmallViewport[2] / 2;
+                $scope.mSmallViewport[1] = pixelY - $scope.mSmallViewPort[3] / 2;
+            }else
+            {
+                $scope.mMyWorld.defineWidth(wcPos);
+                
+            }
             break;
+
         }
     };
-
 });
