@@ -9,9 +9,10 @@
 
 "use strict";
 
-function Camera(wcCenter, wcWidth, viewportArray) {
+function Camera(wcCenter, wcWidth,wcHeight, viewportArray) {
     this.mWCCenter = wcCenter;
     this.mWCWidth = wcWidth;
+    this.mWCHeight = wcHeight;
     this.mNearPlane = 0;
     this.mFarPlane = 1000;
     this.setViewport(viewportArray);
@@ -35,9 +36,9 @@ Camera.prototype.setWCCenter = function (xPos, yPos) {
 Camera.prototype.getWCCenter = function () { return this.mWCCenter; };
 Camera.prototype.setWCWidth = function (width) { this.mWCWidth = width; };
 Camera.prototype.getWCWidth = function () { return this.mWCWidth; };
-Camera.prototype.getWCHeight = function () { return this.getWCWidth() * this.mViewport[3] / this.mViewport[2]; };
+Camera.prototype.getWCHeight = function () { return this.mWCHeight * this.mViewport[3] / this.mViewport[2]; };
                                 // viewport.Height / viewport.Width
- 
+Camera.prototype.setWCHeight = function (height) {this.mWCHeight = height; }; 
 
 Camera.prototype.setViewport = function (viewportArray) { this.mViewport = viewportArray; };
 Camera.prototype.getViewport = function () { return this.mViewport; };
@@ -102,7 +103,7 @@ Camera.prototype.setupViewProjection = function () {
    */
 
 
-    var wcHeight = this.mWCWidth  * this.mViewport[3] / this.mViewport[2]; // viewportH/viewportW
+    var wcHeight = this.mWCHeight  * this.mViewport[3] / this.mViewport[2]; // viewportH/viewportW
     mat4.identity(this.mVPMatrix);
     mat4.scale(this.mVPMatrix, this.mVPMatrix, [2 / this.mWCWidth, 2 / wcHeight, 1]);
     mat4.translate(this.mVPMatrix, this.mVPMatrix, [-this.mWCCenter[0], -this.mWCCenter[1], 0]);

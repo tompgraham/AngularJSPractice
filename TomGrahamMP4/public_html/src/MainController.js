@@ -36,12 +36,13 @@ myModule.controller("MainCtrl", function ($scope) {
 
     $scope.mView = new Camera(
                 [0, 0],         // wc Center
-                200,                // wc Wdith
+                200, 200,               // wc Wdith
                 [0, 0, 800, 600]);  // viewport: left, bottom, width, height
             
     // small view support
     $scope.setSmallViewWC = function () {
         $scope.mSmallView.setWCWidth(parseInt($scope.mSmallViewWCWidth));
+        $scope.mSmallView.setWCHeight(parseInt($scope.mSmallViewWCHeight));
     };
     $scope.setSmallViewWCCenter = function () {
         $scope.mSmallView.setWCCenter(
@@ -49,6 +50,14 @@ myModule.controller("MainCtrl", function ($scope) {
             parseInt($scope.mSmallViewWCCenter[1])
         );
     };
+    
+    $scope.setWCBoxSize = function () {
+        //$scope.mSmallViewport[2] = $scope.mSmallViewport[2] * $scope.mSmallViewWCWidth / $scope.mSmallViewWCHeight;
+        $scope.mSmallViewWCHeight = $scope.mSmallViewWCWidth * $scope.mSmallViewport[2] / $scope.mSmallViewport[3];
+        $scope.setSmallViewWC();
+        $scope.setSmallViewport();
+    };
+    
     $scope.setSmallViewport = function () {
         var v = $scope.mSmallView.getViewport();
         var i;
@@ -56,11 +65,12 @@ myModule.controller("MainCtrl", function ($scope) {
             v[i] = parseInt($scope.mSmallViewport[i]);
     };
     $scope.mSmallViewWCWidth = 30;
+    $scope.mSmallViewWCHeight = 30;
     $scope.mSmallViewport = [100, 200, 200, 200];
     $scope.mSmallViewWCCenter = [-5, -10];
     $scope.mSmallView = new Camera(
                 [0, 0],// wc Center
-                10, // wc width
+                10, 10, // wc width
                 [0, 0, 100, 100]);    // viewport: left, bottom, width, height
     $scope.mSmallView.setBackgroundColor([0.9, 0.7, 0.7, 1]);
     $scope.setSmallViewWC();
@@ -76,10 +86,10 @@ myModule.controller("MainCtrl", function ($scope) {
         //
         // $scope.mMyWorld.update();
         $scope.mMyWorld.setSquareArea(true, $scope.mSmallViewWCCenter[0],$scope.mSmallViewWCCenter[1],
-            $scope.mSmallViewWCWidth, $scope.mSmallViewWCWidth);
+            $scope.mSmallViewWCWidth * $scope.mSmallViewport[2]/$scope.mSmallViewport[3], $scope.mSmallViewWCHeight*$scope.mSmallViewport[3]/$scope.mSmallViewport[2]);
 
         $scope.mMyWorld.setSquareArea(false, $scope.mSmallViewWCCenter[0],$scope.mSmallViewWCCenter[1],
-                $scope.mSmallViewWCWidth, $scope.mSmallViewport[3] * $scope.mSmallViewWCWidth/ 200);
+                $scope.mSmallViewWCWidth, $scope.mSmallViewport[3] * $scope.mSmallViewWCHeight/ $scope.mSmallViewport[2]);
 //        $scope.mMyWorld.setSquareArea(false, 
 //                (($scope.mSmallViewport[2]+$scope.mSmallViewport[0]) * 200 / 800) - 125,
 //                (($scope.mSmallViewport[3]+$scope.mSmallViewport[1]) * 200 / 800) - 100,
@@ -92,6 +102,19 @@ myModule.controller("MainCtrl", function ($scope) {
         $scope.mMyWorld.draw($scope.mSmallView, false);
        
     };
+
+    $scope.setWidth = function ()
+    {
+        $scope.setSmallViewport();
+        $scope.setSmallViewWC();
+    }
+    
+    $scope.setHeight = function ()
+    {
+        $scope.setSmallViewport();
+    //    $scope.mSmallViewWCHeight = $scope.mSmallViewWCWidth * $scope.mSmallViewport[3] / $scope.mSmallViewport[2];
+        $scope.setSmallViewWC();
+    }
 
     $scope.computeWCPos = function (event) {
         var wcPos = [0, 0];

@@ -51,14 +51,15 @@ function ClassExample() {
 ClassExample.prototype.draw = function (camera, mainCamera) {
 
     // Step F: Starts the drawing by activating the camera
-    camera.setupViewProjection();
+    
+        camera.setupViewProjection();
 
-//    this.mParent.draw(camera);
-    
-    var i;
-    for (i=0; i<this.mAllObjects.length; i++)
-        this.mAllObjects[i].draw(camera);
-    
+    //    this.mParent.draw(camera);
+
+        var i;
+        for (i=0; i<this.mAllObjects.length; i++)
+            this.mAllObjects[i].draw(camera);
+
     
     
     if (mainCamera)
